@@ -86,7 +86,7 @@ func (ma *Machine) ParseMessageC() []byte {
 	return content[1:33]
 }
 
-//发送消息
+// Commucate 发送消息
 /*
 	A生成一个一次性随机数a，并计算Q_AB=h(K_HG∥id_A∥id_B )
 	和C=MAC[Q_AB,Gid∥id_A∥T_1∥a]，
@@ -131,7 +131,7 @@ func (ma *Machine) Commucate(target *Machine) {
 
 }
 
-//接收到信息后检查步骤
+// CheckMessage 接收到信息后检查步骤
 /*
 	一旦B接收到请求消息，首先检验(T_2-T_1 )≤T是否成立，如果成立则继续下一步
 	：计算Q_AB=h(K_HG∥id_A∥id_B )和C=MAC[Q_AB,Gid∥id_A∥T_1∥a]，
@@ -194,7 +194,7 @@ func (ma *Machine) CheckMessage(checkma *Machine) bool {
 	return true
 }
 
-//A检查收到的消息
+// ReplyPhaseone A检查收到的消息
 /*
 	A首先检验(T_3-T_2 )≤T是否成立，
 	如果成立则用存在自己存储器中的KHG解密NB来获得id_B^*,b,a^*,T_2^*，
