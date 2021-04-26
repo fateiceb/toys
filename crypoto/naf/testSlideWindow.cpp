@@ -7,8 +7,8 @@ int count_zero(int t)
     int counter = 0;
     int mid = 0;
     while(t > 0) {
-        mid = t%2;
-        t = t >> 1;
+        mid = t%10;
+        t = t /10;
         if(mid == 0){
             counter++;
         }
@@ -23,11 +23,10 @@ int main(){
     cin>>n;
     cout<<"please enter w"<< endl;
     cin>>w;
-
+    mid = pow(2,w) - 1; //2^w - 1
     while( n >= 1){
         //n为奇数
         if( n %2 != 0){
-            mid = pow(2,w) - 1; //2^w - 1
             t = n & mid; //1 k & 2^w - 1 
             // cout << t; //debug
             //2
@@ -49,8 +48,6 @@ int main(){
             //5
             i = i+2;
         }else {
-           mid = pow(2,w) - 1; //2^w - 1
-           t = n & mid; //1 k & 2^w - 1
            int count = count_zero(t);
         //    if(count == 0)
         //    {

@@ -3,8 +3,9 @@
 using namespace std;
 
 int main(){
-    int i = 0 ,n = 0;
+    int i = 0 ,n = 0,p =1,q=1;;
     int k[32] = {0};
+    cout << "please enter a num"<<endl;
     cin >> n;
     while(n >= 1){
         if (n %2 != 0){
@@ -19,5 +20,16 @@ int main(){
     for(int j = i-1;j>=0;j--){
         cout << " "<<k[j];
     }
+      cout <<endl;
+  for(int j=i-1;j>0;j--)     
+  {
+   q=2*q;
+   if(k[j-1]>0)
+    q=q+p;
+   else if(k[j-1]<0)
+    q=q-p;
+  }
+ cout<<"The scalar number is: ";
+ cout<<q<<endl;
     cout<<endl;
 }

@@ -5,7 +5,7 @@ int main(){
     int n = 0,p =1,q=1;
     int k[32] = {0};
     int i = 0;
-    cout << "please input n:"<<endl;
+    cout << "please input number:"<<endl;
     cin >> n;
     while(n > 0){
         int t = n &0x3;
