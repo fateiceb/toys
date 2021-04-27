@@ -1,3 +1,6 @@
+syntax = "proto3";
+option go_package = "newgenerationInterface/helloworld";
+package helloworld;
 // The greeting service definition.
 service Greeter {
     // Sends a greeting
