@@ -9,36 +9,34 @@ import (
 	log "log"
 	"net/http"
 	"os"
-
-	"github.com/labstack/echo/v4"
 )
 
 type Response struct {
 	Content interface{}
-	Code string
-
+	Code    string
 }
-func name(w http.ResponseWriter,r *http.Request) {
+
+func name(w http.ResponseWriter, r *http.Request) {
 	a := map[string]string{}
 	a["a"] = "1"
 	a["b"] = "2"
-	re := Response{Content:a,Code: "success"}
+	re := Response{Content: a, Code: "success"}
 	x, err := json.Marshal(re)
 	if err != nil {
 		fmt.Sprint(err)
 	}
-	w.Header().Set("Content-Type","application/json")
-	io.Copy(w,bytes.NewReader(x))
+	w.Header().Set("Content-Type", "application/json")
+	io.Copy(w, bytes.NewReader(x))
 }
 
-func file(w http.ResponseWriter,r *http.Request){
+func file(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodGet {
 		w.Write([]byte("wrong message"))
 	}
 	if r.Method == http.MethodPost {
-		file,handle,err := r.FormFile("image")
+		file, handle, err := r.FormFile("image")
 		log.Println(handle.Filename)
-		defer  file.Close()
+		defer file.Close()
 		if err != nil {
 			log.Println(err)
 		}
@@ -53,9 +51,10 @@ func file(w http.ResponseWriter,r *http.Request){
 }
 
 func main() {
-	http.HandleFunc("/name",name)
-	http.HandleFunc("/file",file)
-	log.Println(http.ListenAndServe(":10001",nil))
+	http.HandleFunc("/name", name)
+	http.HandleFunc("/file/", file)
+
+	log.Println(http.ListenAndServe(":10001", nil))
 	// Echo instance
 	//e := echo.New()
 	//

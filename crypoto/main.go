@@ -2,10 +2,12 @@ package main
 
 import (
 	"fmt"
-	"math/rand"
+	"os"
 )
 
 func main() {
+	result := os.O_WRONLY | os.O_RDONLY
+	fmt.Printf("w:%x  r:%x  result:%x", os.O_WRONLY, os.O_RDONLY, result)
 	// // str := sha256.Sum256([]byte("world"))
 	// message := "hellodsadsadsads2ad"
 	// hash := sha256.New()
@@ -43,7 +45,7 @@ func main() {
 
 	// log.Println(timenow)
 	// log.Println(timenowformat)
-	rand.Seed(23)
-	num := rand.Int31()
-	fmt.Println()
+	//rand.Seed(23)
+	//num := rand.Int31()
+	//fmt.Println()
 }

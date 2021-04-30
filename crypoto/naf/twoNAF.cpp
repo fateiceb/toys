@@ -1,19 +1,19 @@
 #include <iostream>
 using namespace std;
 int main(){
-    cout <<"å¤šä½ç”Ÿæˆ"<<endl;
+    cout <<"¶àÎ»Éú³É"<<endl;
     int n = 0,p =1,q=1;
     int k[32] = {0};
     int i = 0;
     cout << "please input number:"<<endl;
     cin >> n;
     while(n > 0){
-        int t = n &0x3;     //å–æœ€åä¸¤ä½ï¼Œæœ‰å¯èƒ½çš„å€¼0,1,2,3
+        int t = n &0x3;     //È¡×îºóÁ½Î»£¬ÓĞ¿ÉÄÜµÄÖµ0,1,2,3
         switch (t) {
             case 0: 
-                k[i] = 0;       //k[i],k[i+1]ä¸€æ¬¡ç”Ÿæˆä¸¤ä½
+                k[i] = 0;       //k[i],k[i+1]Ò»´ÎÉú³ÉÁ½Î»
                 k[i+1] = 0;     
-                i=i+2;          //iåç§»ä¸¤ä½
+                i=i+2;          //iºóÒÆÁ½Î»
                 n = n >> 2; //  n/4
                 break;
             case 1: 
@@ -25,7 +25,7 @@ int main(){
             case 2: 
                 k[i] = 0;
                 i=i+1;
-                n = n >> 1;      // n/2,né™¤ä»¥2
+                n = n >> 1;      // n/2,n³ıÒÔ2
                 break;
             case 3: 
                 k[i] = -1;
@@ -41,7 +41,7 @@ int main(){
     cout<<k[j]<<" ";
   cout<<endl;
   
-  for(int j=i-2;j>0;j--)     //NAFæ ‡é‡ä¹˜ç®—æ³•çš„å®ç° 
+  for(int j=i-2;j>0;j--)     //NAF±êÁ¿³ËËã·¨µÄÊµÏÖ 
   {
    q=2*q;
    if(k[j-1]>0)

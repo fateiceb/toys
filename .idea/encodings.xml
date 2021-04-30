@@ -3,5 +3,7 @@
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/crypoto/naf/MOF.cpp" charset="GBK" />
     <file url="file://$PROJECT_DIR$/crypoto/naf/NAF.cpp" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/crypoto/naf/normalNaf.cpp" charset="GB2312" />
+    <file url="file://$PROJECT_DIR$/crypoto/naf/twoNAF.cpp" charset="GB2312" />
   </component>
 </project>
