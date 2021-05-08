@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bufio"
 	"bytes"
 	"crypto/ecdsa"
 	"crypto/elliptic"
@@ -11,6 +12,7 @@ import (
 	"hash"
 	"log"
 	"math/big"
+	"os"
 	"time"
 )
 
@@ -60,7 +62,7 @@ type Gateway struct {
 func (g *Gateway) SendMessageToSensor(message string, sensor *Sensor) (int64, []byte) {
 	//验证t2时间戳
 	t2 := time.Now().Unix()
-	fmt.Println("sensor:时间戳t2", t2)
+	fmt.Println(sensor.SensorId,":时间戳t2", t2)
 	//时间间隔
 	time.Sleep(1 * time.Second)
 	//网关发送t3时间戳消息
@@ -71,8 +73,8 @@ func (g *Gateway) SendMessageToSensor(message string, sensor *Sensor) (int64, []
 	hashval := hash.Sum(nil)
 	random, _ := crand.Int(crand.Reader, big.NewInt(10000000))
 	//网关验证传感器消息
-	g.VerifySensor("sensor", t3, hashval, random, *sensor)
-	fmt.Println("gatway: send to sensor t3时间戳", t3)
+	g.VerifySensor(sensor.SensorId, t3, hashval, random, *sensor)
+	fmt.Println("gatway: send to ",sensor.SensorId," t3时间戳", t3)
 	time.Sleep(1 * time.Second)
 	t4 := time.Now().Unix()
 	hash.Reset()
@@ -155,12 +157,12 @@ func (u *User) SendMessage(message string, gwn GWN) bool {
 			log.Fatal(err)
 		}
 		t1 := time.Now().Unix()
-		fmt.Println("user随机数", rand, "时间戳t1", t1)
+		fmt.Println(u.Username,"随机数", rand, "时间戳t1", t1)
 		h.Reset()
 		h.Write([]byte(u.Username))
 		hashval := h.Sum(nil)
 		//网关验证
-		gwn.VerifyUser("user", t1, hashval, rand, *u)
+		gwn.VerifyUser(u.Username, t1, hashval, rand, *u)
 		return true
 	}
 	return false
@@ -171,18 +173,18 @@ func (u *User) Verify(t int64, hashval []byte) bool {
 	h.Reset()
 	time.Sleep(1 * time.Second)
 	t4 := time.Now().Unix()
-	fmt.Println("user:t4时间戳", t, "t4'时间戳", t4)
+	fmt.Println(u.Username,":t4时间戳", t, "t4'时间戳", t4)
 	if t4 < t {
-		fmt.Println("user:时间验证错误")
+		fmt.Println(u.Username,"时间验证错误")
 		return false
 	}
 	h.Write(int64ToByteArr(t))
 	verifyval := h.Sum(nil)
 	if bytes.Compare(hashval, verifyval) != 0 {
-		fmt.Println("user:hash值错误")
+		fmt.Println(u.Username,"hash值错误")
 		return false
 	}
-	fmt.Println("user:验证成功计算会话密钥")
+	fmt.Println(u.Username,"验证成功计算会话密钥")
 	h2 := publicParams.H2
 	h2.Reset()
 	h2.Write(u.Priv.D.Bytes())
@@ -211,7 +213,7 @@ func NewSensor(Id string) *Sensor {
 	if err != nil {
 		log.Fatal(priv)
 	}
-	fmt.Printf("Sensor:%+v\n", priv.PublicKey.Params())
+	fmt.Printf(Id,":%+v\n", priv.PublicKey.Params())
 
 	return &Sensor{SensorId: Id, priv: priv}
 }
@@ -250,14 +252,27 @@ func byteArrToInt64(bytes []byte) int64 {
 }
 
 func main() {
+	//标准输入
+	fmt.Println("please input user name:")
+	reader := bufio.NewReader(os.Stdin)
+	username,err  := reader.ReadString('\n')
+	username = username[:len(username)-1]
+
+	fmt.Println("please input sensor ID:")
+	sensorId,err  := reader.ReadString('\n')
+	sensorId = sensorId[:len(sensorId)-1]
+
+	if err != nil {
+		log.Fatal("输入错误")
+	}
 	//占位符
 	indent := "-------------"
 	//新建gateWay
 	gwn := NewGateWay()
 	//新建User
-	user := NewUser("user1")
+	user := NewUser(username)
 	//新建SenSor
-	sensor := NewSensor("s1")
+	sensor := NewSensor(sensorId)
 	//gatWay公布公共参数
 	publicParams = gwn.Init()
 	fmt.Println(indent, "公共参数", indent)
@@ -282,5 +297,4 @@ func main() {
 	t4, val := gwn.SendMessageToSensor("sensor", sensor)
 	//用户验证传感器参数
 	user.Verify(t4, val)
-
 }
