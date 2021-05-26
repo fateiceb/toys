@@ -292,6 +292,7 @@ func NewMS(id []byte) *MS {
 
 
 func main() {
+	t1 := time.Now()
 	phaseLog("Initialization phase")
 	rc := NewRc();
 	params = rc.InitParams()
@@ -312,6 +313,7 @@ func main() {
 	rc.Compare(result,alice,ms)
 	a,t,y,Tms := ms.CommunicateWithmu(alice)
 	alice.CheckAndSetSessionKey(a,t,y,Tms)
+	fmt.Println(time.Since(t1))
 }
 
 //Help Functions
