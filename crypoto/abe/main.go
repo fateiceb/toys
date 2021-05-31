@@ -298,7 +298,8 @@ func main() {
 	orgs := NewOrganzations(names, policys)
 	_ = policyPriv
 
-	log.Printf("expect: %s", policyPriv)
+	log.Printf(
+		"expect: %s", policyPriv)
 	log.Printf("alice unlock: %s", UnlockPolicy(alice, policy))
 	log.Printf("bob unlock: %s", UnlockPolicy(bob, policy))
 	log.Printf("charles unlock: %s", UnlockPolicy(charles, policy))

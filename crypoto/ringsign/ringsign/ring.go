@@ -408,6 +408,11 @@ func TestLinkabilityTrue() {
 
 	/* 生成环 */
 	keyring1, err := GenNewKeyRing(2, privkey, 0)
+	log.Printf("环中公钥")
+	for k,v := range keyring1{
+		log.Printf("第%d个公钥",k+1)
+		log.Printf("%+v",v)
+	}
 	if err != nil {
 		log.Fatal(err)
 	}
