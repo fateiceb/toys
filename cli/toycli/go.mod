@@ -1,4 +1,4 @@
-module toycli
+module github.com/fateiceb/toys/cli/toycli
 
 go 1.16
 
