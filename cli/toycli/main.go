@@ -1,9 +1,10 @@
 package main
 
 import (
-	"cli/cmd"
+	"github.com/spf13/cobra"
+	"toycli/cmd"
 )
 
 func main() {
-	cmd.Execute()
+
 }
