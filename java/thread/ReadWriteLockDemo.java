@@ -46,6 +46,8 @@ private class Counter {
         rLock.lock();
         try {
             return Arrays.copyOf(counts, counts.length);
+        }finally {
+            rLock.unlock();
         }
     }
 }
